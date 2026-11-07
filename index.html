@@ -240,6 +240,8 @@
     transition: all 0.15s ease;
   }
   .bl-ghost-btn:hover { color: var(--brass-bright); border-color: var(--brass); }
+  button:disabled, input[readonly], select:disabled { opacity: .72; }
+  input[readonly] { cursor: default; }
 
   .bl-target-row { display: flex; align-items: flex-end; gap: 22px; margin-top: 18px; flex-wrap: wrap; }
 
@@ -414,6 +416,98 @@
     background: var(--bg-elevated);
   }
 
+  .bl-admin-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border); background: transparent; color: var(--muted);
+    border-radius: 7px; padding: 7px 10px; font-family: 'Inter', sans-serif;
+    font-size: 12px; cursor: pointer; white-space: nowrap;
+  }
+  .bl-admin-btn:hover { color: var(--brass-bright); border-color: var(--brass); }
+  .bl-admin-badge {
+    display: inline-flex; align-items: center; gap: 5px; color: var(--brass-bright);
+    font-size: 11px; font-family: 'Inter', sans-serif; white-space: nowrap;
+  }
+  .bl-readonly-note {
+    margin: 0 0 14px; padding: 9px 12px; border: 1px solid var(--border-soft);
+    border-radius: 8px; background: var(--bg-elevated); color: var(--muted);
+    font-size: 12px;
+  }
+  .bl-login-overlay {
+    position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
+    padding: 20px; background: rgba(0,0,0,.72); backdrop-filter: blur(5px);
+  }
+  .bl-login-card {
+    width: min(390px, 100%); background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; box-shadow: 0 18px 60px rgba(0,0,0,.45);
+  }
+  .bl-login-card h2 { margin: 0 0 7px; font-family: 'Fraunces', serif; font-size: 25px; }
+  .bl-login-card p { margin: 0 0 18px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .bl-login-field { display: block; margin-bottom: 12px; }
+  .bl-login-field span { display: block; margin-bottom: 6px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+  .bl-login-field input { width: 100%; box-sizing: border-box; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 7px; padding: 10px 11px; font: 14px 'Inter', sans-serif; outline: none; }
+  .bl-login-field input:focus { border-color: var(--brass); }
+  .bl-login-actions { display: flex; gap: 8px; margin-top: 16px; }
+  .bl-login-primary { flex: 1; border: 1px solid var(--brass); background: var(--brass); color: #17120d; border-radius: 7px; padding: 10px 12px; font-weight: 700; cursor: pointer; }
+  .bl-login-secondary { border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 7px; padding: 10px 12px; cursor: pointer; }
+  .bl-login-error { margin-top: 12px; color: #e79a9a; font-size: 12px; line-height: 1.4; }
+  .bl-admin-only { display: inline-flex; }
+  @media (max-width: 860px) {
+    .bl-admin-btn { padding: 7px 8px; }
+    .bl-admin-badge { display: none; }
+    .bl-shop-title { font-size: 24px; }
+  }
+
+  /* shopping list */
+  .bl-nav-btn {
+    display: flex; align-items: center; gap: 9px; width: 100%;
+    background: var(--surface); border: 1px solid var(--border-soft); color: var(--cream);
+    font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 500;
+    padding: 10px 12px; border-radius: 8px; cursor: pointer; text-align: left;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .bl-nav-btn:hover { background: var(--surface-hover); }
+  .bl-nav-btn:focus-visible { outline: 2px solid var(--brass-bright); outline-offset: 2px; }
+  .bl-nav-btn-active { border-color: var(--brass); background: var(--surface-hover); color: var(--brass-bright); }
+
+  .bl-shop-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 400; margin: 0; color: var(--cream); }
+  .bl-shop-sub { color: var(--muted); font-size: 13.5px; line-height: 1.55; margin: 8px 0 0; max-width: 560px; }
+  .bl-shop-picker { margin: 22px 0; border: 1px solid var(--border-soft); border-radius: 10px; overflow: hidden; }
+  .bl-shop-picker-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px; background: var(--bg-elevated); border-bottom: 1px solid var(--border-soft); }
+  .bl-link-btn { background: none; border: none; color: var(--brass-bright); font-family: 'Inter', sans-serif; font-size: 12.5px; cursor: pointer; padding: 4px 2px; }
+  .bl-link-btn:hover { text-decoration: underline; }
+  .bl-shop-pick { display: flex; align-items: center; gap: 12px; padding: 9px 14px; border-bottom: 1px solid var(--border-soft); }
+  .bl-shop-pick input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--brass); cursor: pointer; flex-shrink: 0; }
+  .bl-shop-pick-name { flex: 1; min-width: 0; font-family: 'Fraunces', serif; font-size: 15.5px; color: var(--muted); cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bl-shop-pick-on .bl-shop-pick-name { color: var(--cream); }
+  .bl-shop-liters { display: flex; align-items: center; gap: 6px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; }
+  .bl-shop-liters input { width: 72px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; color: var(--cream); font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 6px 8px; text-align: right; }
+  .bl-shop-liters input:focus { outline: none; border-color: var(--brass); }
+  .bl-shop-picker-foot { margin: 0; padding: 9px 14px; font-size: 11.5px; color: var(--muted-dim); }
+  .bl-shop-empty { color: var(--muted-dim); font-size: 13.5px; line-height: 1.55; margin: 6px 2px; }
+  .bl-shop-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .bl-shop-stats { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--muted); }
+  .bl-shop-stats strong { color: var(--cream); font-weight: 600; }
+  .bl-shop-actions { display: flex; gap: 8px; }
+  .bl-shop-table { min-width: 640px; }
+  .bl-shop-table td { vertical-align: top; padding: 10px 14px; }
+  .bl-shop-group td { padding: 9px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brass-bright); background: var(--bg-elevated); border-bottom: 1px solid var(--border-soft); }
+  .bl-shop-group td span { color: var(--muted-dim); margin-left: 8px; }
+  .bl-shop-name { font-weight: 500; color: var(--cream); }
+  .bl-shop-uses { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .bl-shop-buycell { font-family: 'IBM Plex Mono', monospace; color: var(--cream); font-weight: 600; }
+  .bl-shop-buy { font-size: 15px; }
+  .bl-shop-detail { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 400; color: var(--muted-dim); margin-top: 2px; }
+  .bl-shop-uses-inline { display: none; }
+  .bl-shop-warn { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 400; color: var(--rust); margin-top: 3px; max-width: 260px; }
+
+  @media screen and (max-width: 860px) {
+    .bl-shop-table { min-width: 0; }
+    .bl-shop-table th:nth-child(3), .bl-shop-table th:nth-child(4),
+    .bl-shop-table td:nth-child(3), .bl-shop-table td:nth-child(4) { display: none; }
+    .bl-shop-uses-inline { display: block; margin-top: 4px; font-size: 11.5px; font-weight: 400; color: var(--muted); line-height: 1.5; }
+    .bl-shop-picker-head, .bl-shop-pick { padding-left: 12px; padding-right: 12px; }
+  }
+
   /* responsive */
   @media (max-width: 860px) {
     .bl-body { flex-direction: column; }
@@ -477,6 +571,14 @@
     .bl-mode-btn:not(.bl-mode-active) { display: none; }
     .bl-mode-active { background: none !important; padding: 0 !important; }
     .bl-mode-btn + .bl-mode-btn { border-left: none; }
+  }
+  @media print {
+    .bl-shop-group td { background: #f4f4f4 !important; color: #333 !important; border-color: #ddd !important; }
+    .bl-shop-name, .bl-shop-buycell, .bl-shop-stats strong { color: #111 !important; }
+    .bl-shop-uses, .bl-shop-detail, .bl-shop-stats { color: #444 !important; }
+    .bl-shop-warn { color: #a33 !important; }
+    .bl-shop-table { min-width: 0; }
+    .bl-shop-uses-inline { display: none !important; }
   }
 </style>
 </head>
@@ -804,23 +906,29 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script>
   // ---------------------------------------------------------------------
   // PEGÁ ACÁ TU CONFIGURACIÓN DE FIREBASE
   // (Firebase console → ⚙️ Configuración del proyecto → tus apps → SDK setup)
   // ---------------------------------------------------------------------
- const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyCOmpWj9Cb7Ukc4HnG12C-Je9uIn3GBT1E",
-  authDomain: "fd-prebatch-2026.firebaseapp.com",
-  databaseURL: "https://fd-prebatch-2026-default-rtdb.firebaseio.com",
-  projectId: "fd-prebatch-2026",
-  storageBucket: "fd-prebatch-2026.firebasestorage.app",
-  messagingSenderId: "160626057282",
-  appId: "1:160626057282:web:ec1c794ad0fc9650fecddb"
-};
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCOMpWj9Cb7Ukc4HnG12C-Je9uIn3GBT1E",
+    authDomain: "fd-prebatch-2026.firebaseapp.com",
+    databaseURL: "https://fd-prebatch-2026-default-rtdb.firebaseio.com",
+    projectId: "fd-prebatch-2026",
+    storageBucket: "fd-prebatch-2026.firebasestorage.app",
+    messagingSenderId: "160626057282",
+    appId: "1:160626057282:web:ec1c794ad0fc9650fecddb"
+  };
+
+  // IMPORTANTE: reemplazá este email por el email que usarás como administrador.
+  // No pongas acá la contraseña. La contraseña se maneja exclusivamente con Firebase Auth.
+  const ADMIN_EMAIL = "danielrodriguezfrank@gmail.com";
 
   firebase.initializeApp(FIREBASE_CONFIG);
   const db = firebase.database();
+  const auth = firebase.auth();
   const cocktailsRef = db.ref("batchlab/cocktails");
   const connectedRef = db.ref(".info/connected");
 </script>
@@ -925,6 +1033,25 @@ const FlaskConical = p => /*#__PURE__*/React.createElement(Icon, p, /*#__PURE__*
 const COLORS = ["#C68B4A", "#7A9A87", "#A65A73", "#4F8FA6", "#B99470", "#8C7BAF", "#C1573D", "#5E7A5B"];
 const DEFAULT_BOTTLE_SIZE = 700;
 const uid = () => Math.random().toString(36).slice(2, 10);
+// Firebase puede devolver un array como objeto cuando hubo borrados o índices huecos.
+// Además, normalizamos recetas/ingredientes para que una receta incompleta no rompa la app.
+const asArray = value => Array.isArray(value) ? value : (value && typeof value === "object" ? Object.values(value) : []);
+const normalizeCocktails = data => asArray(data).filter(Boolean).map(c => ({
+  ...c,
+  id: c.id || uid(),
+  name: c.name || "Sin nombre",
+  targetLiters: Number(c.targetLiters) || 10,
+  ingredients: asArray(c.ingredients).filter(Boolean).map(i => ({
+    ...i,
+    id: i.id || uid(),
+    name: i.name || "",
+    amount: Number(i.amount) || 0,
+    unit: i.unit || "ml",
+    trackBottles: !!i.trackBottles,
+    bottleSize: i.bottleSize == null ? null : Number(i.bottleSize) || null
+  }))
+}));
+
 const seedCocktails = () => [{
   id: uid(),
   name: "Cosmo del Sur",
@@ -1075,6 +1202,8 @@ const neededDisplay = (ing, total) => {
 // is a local UI preference, not something that should sync to everyone else
 // viewing the shared link at the same time.
 const SELECTED_ID_KEY = "batch-lab-selected-id";
+const PRODUCTION_TARGETS_KEY = "batch-lab-production-targets";
+const SHOPPING_SELECTION_KEY = "batch-lab-shopping-selection";
 
 // ---------------------------------------------------------------------------
 
@@ -1089,22 +1218,66 @@ function App() {
   });
   const [saveState, setSaveState] = useState("idle"); // idle | saving | saved
   const [online, setOnline] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [productionTargets, setProductionTargets] = useState(() => {
+    try {
+      const raw = localStorage.getItem(PRODUCTION_TARGETS_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  });
   const [mobileListOpen, setMobileListOpen] = useState(false);
+  const [view, setView] = useState("recipes"); // recipes | shopping
+  const [shoppingSel, setShoppingSel] = useState(() => {
+    try {
+      const raw = localStorage.getItem(SHOPPING_SELECTION_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem(SHOPPING_SELECTION_KEY, JSON.stringify(shoppingSel));
+    } catch (e) {/* ignore */}
+  }, [shoppingSel]);
   const saveTimer = useRef(null);
-  const isRemoteUpdate = useRef(false);
-  const firstLoad = useRef(true);
+  const isRemoteUpdate = useRef(true);
+
+  const isAdmin = !!user && (user.email || "").toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+  // Authentication is only used for the administrator. Production users do not
+  // need an account and remain read-only.
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(nextUser => setUser(nextUser));
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(PRODUCTION_TARGETS_KEY, JSON.stringify(productionTargets));
+    } catch (e) {/* ignore */}
+  }, [productionTargets]);
 
   // ---- live subscription: everyone with the link shares this data ----
   useEffect(() => {
     const handleValue = snapshot => {
       const data = snapshot.val();
-      isRemoteUpdate.current = true;
-      if (data && data.length) {
-        setCocktails(data);
+      const normalized = normalizeCocktails(data);
+      if (normalized.length) {
+        isRemoteUpdate.current = true;
+        setCocktails(normalized);
+
+        // Keep Firebase in the canonical array shape. This also repairs old
+        // data that Firebase returned as an object or with missing fields.
+        const rawList = asArray(data);
+        const rawLooksDifferent = !Array.isArray(data) ||
+          JSON.stringify(rawList) !== JSON.stringify(normalized);
+        if (rawLooksDifferent && isAdmin) cocktailsRef.set(normalized).catch(() => {});
       } else {
+        // First run: seed Firebase only when the shared database is empty.
         const seed = seedCocktails();
+        isRemoteUpdate.current = true;
         setCocktails(seed);
-        cocktailsRef.set(seed);
+        if (isAdmin) cocktailsRef.set(seed).catch(() => {});
       }
     };
     cocktailsRef.on("value", handleValue);
@@ -1114,7 +1287,7 @@ function App() {
       cocktailsRef.off("value", handleValue);
       connectedRef.off("value", handleConnected);
     };
-  }, []);
+  }, [isAdmin]);
 
   // ---- pick a sensible selected cocktail once data arrives / changes ----
   useEffect(() => {
@@ -1131,11 +1304,7 @@ function App() {
 
   // ---- push local edits to everyone (debounced, skips remote echoes) ----
   useEffect(() => {
-    if (cocktails === null) return;
-    if (firstLoad.current) {
-      firstLoad.current = false;
-      return;
-    }
+    if (cocktails === null || !isAdmin) return;
     if (isRemoteUpdate.current) {
       isRemoteUpdate.current = false;
       return;
@@ -1146,18 +1315,25 @@ function App() {
       cocktailsRef.set(cocktails).then(() => {
         setSaveState("saved");
         setTimeout(() => setSaveState("idle"), 1400);
-      }).catch(() => setSaveState("idle"));
+      }).catch(() => setSaveState("error"));
     }, 450);
     return () => clearTimeout(saveTimer.current);
-  }, [cocktails]);
+  }, [cocktails, isAdmin]);
   const selected = cocktails ? cocktails.find(c => c.id === selectedId) || null : null;
+  const selectedTarget = selected ? (productionTargets[selected.id] ?? selected.targetLiters ?? 10) : 10;
+  const setProductionTarget = useCallback((value) => {
+    if (!selected) return;
+    setProductionTargets(prev => ({ ...prev, [selected.id]: value }));
+  }, [selected]);
   const updateCocktail = useCallback((id, patch) => {
+    if (!isAdmin) return;
     setCocktails(prev => prev.map(c => c.id === id ? {
       ...c,
       ...patch
     } : c));
-  }, []);
+  }, [isAdmin]);
   const updateIngredient = useCallback((cocktailId, ingId, patch) => {
+    if (!isAdmin) return;
     setCocktails(prev => prev.map(c => c.id !== cocktailId ? c : {
       ...c,
       ingredients: c.ingredients.map(i => i.id === ingId ? {
@@ -1165,8 +1341,9 @@ function App() {
         ...patch
       } : i)
     }));
-  }, []);
+  }, [isAdmin]);
   const addIngredient = cocktailId => {
+    if (!isAdmin) return;
     setCocktails(prev => prev.map(c => c.id !== cocktailId ? c : {
       ...c,
       ingredients: [...c.ingredients, {
@@ -1180,12 +1357,14 @@ function App() {
     }));
   };
   const removeIngredient = (cocktailId, ingId) => {
+    if (!isAdmin) return;
     setCocktails(prev => prev.map(c => c.id !== cocktailId ? c : {
       ...c,
       ingredients: c.ingredients.filter(i => i.id !== ingId)
     }));
   };
   const addCocktail = () => {
+    if (!isAdmin) return;
     const fresh = {
       id: uid(),
       name: "Nuevo cóctel",
@@ -1197,6 +1376,7 @@ function App() {
     setMobileListOpen(false);
   };
   const duplicateCocktail = id => {
+    if (!isAdmin) return;
     const original = cocktails.find(c => c.id === id);
     if (!original) return;
     const clone = {
@@ -1218,6 +1398,7 @@ function App() {
     setMobileListOpen(false);
   };
   const removeCocktail = id => {
+    if (!isAdmin) return;
     const c = cocktails.find(x => x.id === id);
     if (!window.confirm(`¿Borrar "${c.name}"? Esta acción no se puede deshacer.`)) return;
     setCocktails(prev => {
@@ -1226,6 +1407,17 @@ function App() {
       return next;
     });
   };
+  const handleLogin = async (email, password) => {
+    if (email.trim().toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      throw new Error("Este usuario no está autorizado como administrador.");
+    }
+    await auth.signInWithEmailAndPassword(email.trim(), password);
+    setLoginOpen(false);
+  };
+  const handleLogout = async () => {
+    await auth.signOut();
+  };
+
   if (cocktails === null) {
     return /*#__PURE__*/React.createElement("div", {
       className: "bl-root bl-loading"
@@ -1253,7 +1445,15 @@ function App() {
     className: "bl-live-label"
   }, online ? "En vivo" : "Sin conexión")), /*#__PURE__*/React.createElement(SaveIndicator, {
     state: saveState
-  }), /*#__PURE__*/React.createElement("button", {
+  }), isAdmin ? /*#__PURE__*/React.createElement("button", {
+    className: "bl-admin-btn",
+    onClick: handleLogout,
+    title: "Cerrar sesión de administrador"
+  }, "🔓 Admin", /*#__PURE__*/React.createElement("span", { className: "bl-admin-badge" }, "Salir")) : /*#__PURE__*/React.createElement("button", {
+    className: "bl-admin-btn",
+    onClick: () => setLoginOpen(true),
+    title: "Ingresar como administrador"
+  }, "🔒 Admin"), /*#__PURE__*/React.createElement("button", {
     className: "bl-mobile-toggle",
     onClick: () => setMobileListOpen(v => !v)
   }, mobileListOpen ? "Cerrar" : "Mis cócteles"))), /*#__PURE__*/React.createElement("div", {
@@ -1261,8 +1461,11 @@ function App() {
   }, /*#__PURE__*/React.createElement("aside", {
     className: `bl-sidebar bl-no-print ${mobileListOpen ? "bl-sidebar-open" : ""}`
   }, /*#__PURE__*/React.createElement("button", {
+    className: `bl-nav-btn ${view === "shopping" ? "bl-nav-btn-active" : ""}`,
+    onClick: () => { setView("shopping"); setMobileListOpen(false); }
+  }, /*#__PURE__*/React.createElement(ShoppingCart, { size: 16 }), "Lista de compras"), isAdmin && /*#__PURE__*/React.createElement("button", {
     className: "bl-new-btn",
-    onClick: addCocktail
+    onClick: () => { setView("recipes"); addCocktail(); }
   }, /*#__PURE__*/React.createElement(Plus, {
     size: 16
   }), " Nuevo c\xF3ctel"), /*#__PURE__*/React.createElement("div", {
@@ -1272,31 +1475,93 @@ function App() {
   }, "Todav\xEDa no cargaste ning\xFAn c\xF3ctel."), cocktails.map(c => /*#__PURE__*/React.createElement(SidebarItem, {
     key: c.id,
     cocktail: c,
-    active: c.id === selectedId,
+    active: view === "recipes" && c.id === selectedId,
     onSelect: () => {
+      setView("recipes");
       setSelectedId(c.id);
       setMobileListOpen(false);
     },
-    onDuplicate: () => duplicateCocktail(c.id),
-    onDelete: () => removeCocktail(c.id)
+    onDuplicate: isAdmin ? () => { setView("recipes"); duplicateCocktail(c.id); } : null,
+    onDelete: isAdmin ? () => removeCocktail(c.id) : null,
+    readOnly: !isAdmin
   })))), /*#__PURE__*/React.createElement("main", {
     className: "bl-main"
-  }, !selected ? /*#__PURE__*/React.createElement(EmptyState, {
-    onAdd: addCocktail
+  }, view === "shopping" ? /*#__PURE__*/React.createElement(ShoppingList, {
+    cocktails: cocktails,
+    selection: shoppingSel,
+    onSelectionChange: setShoppingSel,
+    getLiters: c => productionTargets[c.id] ?? c.targetLiters ?? 10,
+    onLitersChange: (id, value) => setProductionTargets(prev => ({ ...prev, [id]: value }))
+  }) : !selected ? /*#__PURE__*/React.createElement(EmptyState, {
+    onAdd: addCocktail,
+    readOnly: !isAdmin
   }) : /*#__PURE__*/React.createElement(CocktailPanel, {
     cocktail: selected,
     onUpdateCocktail: patch => updateCocktail(selected.id, patch),
     onUpdateIngredient: (ingId, patch) => updateIngredient(selected.id, ingId, patch),
     onAddIngredient: () => addIngredient(selected.id),
     onRemoveIngredient: ingId => removeIngredient(selected.id, ingId),
-    onDuplicate: () => duplicateCocktail(selected.id)
+    onDuplicate: isAdmin ? () => duplicateCocktail(selected.id) : null,
+    targetLiters: selectedTarget,
+    onTargetChange: setProductionTarget,
+    readOnly: !isAdmin
   }))), /*#__PURE__*/React.createElement("footer", {
     className: "bl-footer-note bl-no-print"
-  }, "Los datos se guardan en este navegador."));
+  }, isAdmin ? "Modo administrador · cambios de recetas sincronizados con Firebase." : "Modo producción · receta protegida · los litros de producción son solo para este dispositivo."), loginOpen && /*#__PURE__*/React.createElement(LoginDialog, {
+    onClose: () => setLoginOpen(false),
+    onLogin: handleLogin
+  }));
+}
+const LOGIN_ERRORS = {
+  "auth/invalid-credential": "Email o contraseña incorrectos.",
+  "auth/wrong-password": "Email o contraseña incorrectos.",
+  "auth/user-not-found": "Ese email no existe en Firebase. Crealo en Authentication → Users → Add user.",
+  "auth/invalid-email": "El email no es válido.",
+  "auth/operation-not-allowed": "El ingreso con email y contraseña está desactivado. Activalo en Firebase → Authentication → Sign-in method → Email/Password.",
+  "auth/unauthorized-domain": "Este sitio no está autorizado. Agregá fd-fashiondrinks.github.io en Firebase → Authentication → Settings → Authorized domains.",
+  "auth/too-many-requests": "Demasiados intentos. Esperá unos minutos y volvé a probar.",
+  "auth/network-request-failed": "Sin conexión. Revisá tu internet.",
+  "auth/invalid-api-key": "Firebase no reconoce la apiKey pegada en el archivo. Copiala de nuevo desde Firebase → ⚙️ Configuración del proyecto → Tus apps → Configuración del SDK."
+};
+function LoginDialog({ onClose, onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const submit = async e => {
+    e.preventDefault();
+    setError("");
+    setBusy(true);
+    try {
+      await onLogin(email, password);
+    } catch (err) {
+      const code = err && err.code ? err.code : "";
+      setError(LOGIN_ERRORS[code.indexOf("auth/api-key-not-valid") === 0 ? "auth/invalid-api-key" : code] || ((err && err.message) || "No se pudo iniciar sesión.") + (code ? " (" + code + ")" : ""));
+    } finally { setBusy(false); }
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "bl-login-overlay",
+    onMouseDown: e => { if (e.target === e.currentTarget) onClose(); }
+  }, /*#__PURE__*/React.createElement("form", { className: "bl-login-card", onSubmit: submit },
+    /*#__PURE__*/React.createElement("h2", null, "Modo administrador"),
+    /*#__PURE__*/React.createElement("p", null, "Ingresá con tu cuenta de Firebase para editar las recetas maestras. El resto de los usuarios puede calcular, pero no modificar la receta."),
+    /*#__PURE__*/React.createElement("label", { className: "bl-login-field" }, /*#__PURE__*/React.createElement("span", null, "Email"), /*#__PURE__*/React.createElement("input", { type: "email", value: email, onChange: e => setEmail(e.target.value), autoComplete: "username", required: true, autoFocus: true })),
+    /*#__PURE__*/React.createElement("label", { className: "bl-login-field" }, /*#__PURE__*/React.createElement("span", null, "Contraseña"), /*#__PURE__*/React.createElement("input", { type: "password", value: password, onChange: e => setPassword(e.target.value), autoComplete: "current-password", required: true })),
+    error && /*#__PURE__*/React.createElement("div", { className: "bl-login-error" }, error),
+    /*#__PURE__*/React.createElement("div", { className: "bl-login-actions" },
+      /*#__PURE__*/React.createElement("button", { type: "button", className: "bl-login-secondary", onClick: onClose }, "Cancelar"),
+      /*#__PURE__*/React.createElement("button", { type: "submit", className: "bl-login-primary", disabled: busy }, busy ? "Ingresando…" : "Ingresar")
+    )
+  ));
 }
 function SaveIndicator({
   state
 }) {
+  if (state === "error") return /*#__PURE__*/React.createElement("span", {
+    className: "bl-save",
+    style: { color: "var(--rust)" },
+    title: "Firebase rechazó el cambio. Revisá las reglas de la base de datos y que tu UID de admin esté en ellas."
+  }, "⚠ No se guardó");
   if (state === "idle") return /*#__PURE__*/React.createElement("span", {
     className: "bl-save bl-save-idle"
   });
@@ -1316,9 +1581,11 @@ function SidebarItem({
   active,
   onSelect,
   onDuplicate,
-  onDelete
+  onDelete,
+  readOnly
 }) {
-  const sum = cocktail.ingredients.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+  const ingredients = Array.isArray(cocktail.ingredients) ? cocktail.ingredients : [];
+  const sum = ingredients.reduce((s, i) => s + (Number(i.amount) || 0), 0);
   return /*#__PURE__*/React.createElement("div", {
     className: `bl-side-item ${active ? "bl-side-item-active" : ""}`,
     onClick: onSelect
@@ -1328,7 +1595,7 @@ function SidebarItem({
     className: "bl-side-item-name"
   }, cocktail.name || "Sin nombre"), /*#__PURE__*/React.createElement("div", {
     className: "bl-side-item-actions"
-  }, /*#__PURE__*/React.createElement("button", {
+  }, !readOnly && /*#__PURE__*/React.createElement("button", {
     className: "bl-icon-btn bl-icon-btn-ghost",
     onClick: e => {
       e.stopPropagation();
@@ -1337,7 +1604,7 @@ function SidebarItem({
     title: "Duplicar"
   }, /*#__PURE__*/React.createElement(Copy, {
     size: 13
-  })), /*#__PURE__*/React.createElement("button", {
+  })), !readOnly && /*#__PURE__*/React.createElement("button", {
     className: "bl-icon-btn bl-icon-btn-ghost",
     onClick: e => {
       e.stopPropagation();
@@ -1348,7 +1615,7 @@ function SidebarItem({
     size: 13
   })))), /*#__PURE__*/React.createElement("div", {
     className: "bl-side-item-meta"
-  }, cocktail.ingredients.length, " insumo", cocktail.ingredients.length !== 1 ? "s" : "", " \xB7 ", fmt(cocktail.targetLiters), " L"), sum > 0 && /*#__PURE__*/React.createElement("div", {
+  }, ingredients.length, " insumo", ingredients.length !== 1 ? "s" : "", " \xB7 ", fmt(cocktail.targetLiters), " L"), sum > 0 && /*#__PURE__*/React.createElement("div", {
     className: "bl-mini-bar"
   }, cocktail.ingredients.map((i, idx) => /*#__PURE__*/React.createElement("span", {
     key: i.id,
@@ -1359,13 +1626,14 @@ function SidebarItem({
   }))));
 }
 function EmptyState({
-  onAdd
+  onAdd,
+  readOnly
 }) {
   return /*#__PURE__*/React.createElement("div", {
     className: "bl-empty"
   }, /*#__PURE__*/React.createElement(Martini, {
     size: 30
-  }), /*#__PURE__*/React.createElement("h2", null, "Arm\xE1 tu primera receta"), /*#__PURE__*/React.createElement("p", null, "Carg\xE1 los insumos de un c\xF3ctel con su cantidad por trago y la app va a calcular el lote completo cuando le digas cu\xE1ntos litros necesit\xE1s."), /*#__PURE__*/React.createElement("button", {
+  }), /*#__PURE__*/React.createElement("h2", null, readOnly ? "No hay recetas cargadas" : "Arm\xE1 tu primera receta"), /*#__PURE__*/React.createElement("p", null, readOnly ? "El administrador todav\xEDa no carg\xF3 ninguna receta en Firebase." : "Carg\xE1 los insumos de un c\xF3ctel con su cantidad por trago y la app va a calcular el lote completo cuando le digas cu\xE1ntos litros necesit\xE1s."), !readOnly && /*#__PURE__*/React.createElement("button", {
     className: "bl-new-btn",
     onClick: onAdd
   }, /*#__PURE__*/React.createElement(Plus, {
@@ -1379,12 +1647,15 @@ function CocktailPanel({
   onUpdateIngredient,
   onAddIngredient,
   onRemoveIngredient,
-  onDuplicate
+  onDuplicate,
+  targetLiters,
+  onTargetChange,
+  readOnly
 }) {
-  const ingredients = cocktail.ingredients;
+  const ingredients = Array.isArray(cocktail.ingredients) ? cocktail.ingredients : [];
   const sumUnit = ingredients.reduce((s, i) => s + (Number(i.amount) || 0), 0);
   const scale = sumUnit > 0 ? 1000 / sumUnit : 0;
-  const target = Number(cocktail.targetLiters) || 0;
+  const target = Number(targetLiters) || 0;
   const handlePrint = () => window.print();
   const toggleBottles = (ing, trackBottles) => {
     if (trackBottles && !ing.bottleSize) onUpdateIngredient(ing.id, {
@@ -1402,7 +1673,7 @@ function CocktailPanel({
     className: "bl-print-eyebrow"
   }, "Especificaci\xF3n de producci\xF3n"), /*#__PURE__*/React.createElement("h1", null, cocktail.name), /*#__PURE__*/React.createElement("p", {
     className: "bl-print-meta"
-  }, "Lote: ", fmt(target), " L \xB7 ", new Date().toLocaleDateString("es-AR"))), /*#__PURE__*/React.createElement("div", {
+  }, "Lote: ", fmt(targetLiters), " L \xB7 ", new Date().toLocaleDateString("es-AR"))), /*#__PURE__*/React.createElement("div", {
     className: "bl-panel-head"
   }, /*#__PURE__*/React.createElement("div", {
     className: "bl-panel-head-row"
@@ -1412,10 +1683,11 @@ function CocktailPanel({
     onChange: e => onUpdateCocktail({
       name: e.target.value
     }),
+    readOnly: readOnly,
     placeholder: "Nombre del c\xF3ctel"
   }), /*#__PURE__*/React.createElement("div", {
     className: "bl-panel-actions bl-no-print"
-  }, /*#__PURE__*/React.createElement("button", {
+  }, !readOnly && /*#__PURE__*/React.createElement("button", {
     className: "bl-ghost-btn",
     onClick: onDuplicate
   }, /*#__PURE__*/React.createElement(Copy, {
@@ -1438,21 +1710,19 @@ function CocktailPanel({
     min: "0",
     step: "0.5",
     className: "bl-liter-input",
-    value: cocktail.targetLiters,
-    onChange: e => onUpdateCocktail({
-      targetLiters: e.target.value
-    })
+    value: targetLiters,
+    onChange: e => onTargetChange(e.target.value)
   }), /*#__PURE__*/React.createElement("span", {
     className: "bl-liter-unit"
   }, "L"))), /*#__PURE__*/React.createElement("div", {
     className: "bl-presets bl-no-print"
   }, LITER_PRESETS.map(n => /*#__PURE__*/React.createElement("button", {
     key: n,
-    className: `bl-preset ${Number(cocktail.targetLiters) === n ? "bl-preset-active" : ""}`,
-    onClick: () => onUpdateCocktail({
-      targetLiters: n
-    })
-  }, n, "L"))))), ingredients.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: `bl-preset ${Number(targetLiters) === n ? "bl-preset-active" : ""}`,
+    onClick: () => onTargetChange(n)
+  }, n, "L"))))), readOnly && /*#__PURE__*/React.createElement("div", {
+    className: "bl-readonly-note"
+  }, "🔒 Receta protegida · podés cambiar los litros de producción y recalcular, pero no modificar las proporciones."), ingredients.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "bl-ratio-section"
   }, /*#__PURE__*/React.createElement("div", {
     className: "bl-ratio-bar"
@@ -1495,6 +1765,7 @@ function CocktailPanel({
       className: "bl-cell-input bl-cell-input-name",
       value: ing.name,
       placeholder: "Nombre del insumo",
+      readOnly: readOnly,
       onChange: e => onUpdateIngredient(ing.id, {
         name: e.target.value
       })
@@ -1506,12 +1777,14 @@ function CocktailPanel({
       min: "0",
       className: "bl-cell-input bl-cell-input-num",
       value: ing.amount,
+      readOnly: readOnly,
       onChange: e => onUpdateIngredient(ing.id, {
         amount: e.target.value
       })
     }), /*#__PURE__*/React.createElement("select", {
       className: "bl-unit-select",
       value: ing.unit,
+      disabled: readOnly,
       onChange: e => onUpdateIngredient(ing.id, {
         unit: e.target.value
       })
@@ -1525,9 +1798,11 @@ function CocktailPanel({
       className: "bl-mode-toggle"
     }, /*#__PURE__*/React.createElement("button", {
       className: `bl-mode-btn ${ing.trackBottles ? "bl-mode-active" : ""}`,
+      disabled: readOnly,
       onClick: () => toggleBottles(ing, true)
     }, "Botella"), /*#__PURE__*/React.createElement("button", {
       className: `bl-mode-btn ${!ing.trackBottles ? "bl-mode-active" : ""}`,
+      disabled: readOnly,
       onClick: () => toggleBottles(ing, false)
     }, "Granel")), ing.trackBottles && /*#__PURE__*/React.createElement("div", {
       className: "bl-bottle-size-wrap"
@@ -1536,6 +1811,7 @@ function CocktailPanel({
       min: "1",
       className: "bl-cell-input bl-cell-input-num bl-cell-input-bottle",
       value: ing.bottleSize ?? "",
+      readOnly: readOnly,
       onChange: e => onUpdateIngredient(ing.id, {
         bottleSize: e.target.value === "" ? null : e.target.value
       })
@@ -1549,7 +1825,7 @@ function CocktailPanel({
       className: "bl-td-computed bl-td-needed"
     }, neededDisplay(ing, total)), /*#__PURE__*/React.createElement("td", {
       className: "bl-no-print"
-    }, /*#__PURE__*/React.createElement("button", {
+    }, !readOnly && /*#__PURE__*/React.createElement("button", {
       className: "bl-icon-btn bl-icon-btn-ghost",
       onClick: () => onRemoveIngredient(ing.id),
       "aria-label": "Quitar insumo"
@@ -1566,7 +1842,7 @@ function CocktailPanel({
     className: "bl-td-computed bl-tfoot-strong"
   }, fmt(sumUnit * scale * target), " ml"), /*#__PURE__*/React.createElement("td", null), /*#__PURE__*/React.createElement("td", {
     className: "bl-no-print"
-  }))))), /*#__PURE__*/React.createElement("button", {
+  }))))), !readOnly && /*#__PURE__*/React.createElement("button", {
     className: "bl-add-ing-btn bl-no-print",
     onClick: onAddIngredient
   }, /*#__PURE__*/React.createElement(Plus, {
@@ -1577,6 +1853,206 @@ function CocktailPanel({
     size: 16
   }), " Este c\xF3ctel todav\xEDa no tiene insumos. Agreg\xE1 el primero para empezar a calcular."));
 }
+// ---------------------------------------------------------------------------
+// Lista de compras combinada: suma los insumos repetidos de varios cócteles
+// ---------------------------------------------------------------------------
+const ShoppingCart = p => React.createElement(Icon, p,
+  React.createElement("circle", { cx: "9", cy: "21", r: "1" }),
+  React.createElement("circle", { cx: "20", cy: "21", r: "1" }),
+  React.createElement("path", { d: "M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" }));
+
+const normalizeName = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+
+const fmtQty = (unit, total) => {
+  if (unit === "gr") return total >= 1000 ? `${fmt(total / 1000, 2)} kg` : `${fmt(total)} gr`;
+  return total >= 1000 ? `${fmt(total / 1000, 2)} L` : `${fmt(total)} ml`;
+};
+
+// Same math as each recipe panel (amount * 1000 / sum of amounts * liters),
+// then merges ingredients that share a name (ignoring accents and case).
+function buildShoppingList(cocktails, selection, getLiters) {
+  const rows = new Map();
+  const batches = [];
+  cocktails.forEach(c => {
+    if (!selection[c.id]) return;
+    const liters = Number(getLiters(c)) || 0;
+    const cname = c.name || "Sin nombre";
+    const ings = Array.isArray(c.ingredients) ? c.ingredients : [];
+    const sum = ings.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+    batches.push({ name: cname, liters });
+    if (sum <= 0 || liters <= 0) return;
+    const scale = 1000 / sum;
+    ings.forEach(ing => {
+      const name = String(ing.name || "").trim();
+      const total = (Number(ing.amount) || 0) * scale * liters;
+      if (!name || !(total > 0)) return;
+      const unit = ing.unit === "gr" ? "gr" : "ml";
+      const key = normalizeName(name) + "|" + unit;
+      let row = rows.get(key);
+      if (!row) {
+        row = { key, name, unit, total: 0, uses: [], sizes: [] };
+        rows.set(key, row);
+      }
+      row.total += total;
+      const use = row.uses.find(u => u.cocktail === cname);
+      if (use) use.total += total; else row.uses.push({ cocktail: cname, total });
+      if (ing.trackBottles && Number(ing.bottleSize) > 0) row.sizes.push(Number(ing.bottleSize));
+    });
+  });
+  const bottled = [];
+  const bulk = [];
+  rows.forEach(row => {
+    if (row.sizes.length && row.unit === "ml") {
+      const counts = {};
+      row.sizes.forEach(s => { counts[s] = (counts[s] || 0) + 1; });
+      let size = row.sizes[0];
+      Object.keys(counts).forEach(s => { if (counts[s] > counts[size]) size = Number(s); });
+      const distinct = Object.keys(counts).map(Number).sort((a, b) => a - b);
+      row.size = size;
+      row.mixedSizes = distinct.length > 1 ? distinct : null;
+      row.exact = row.total / size;
+      row.buy = Math.max(1, Math.ceil(row.exact - 1e-9));
+      row.leftover = row.buy * size - row.total;
+      bottled.push(row);
+    } else {
+      bulk.push(row);
+    }
+  });
+  const byName = (a, b) => a.name.localeCompare(b.name, "es");
+  bottled.sort(byName);
+  bulk.sort(byName);
+  return { bottled, bulk, batches };
+}
+
+function shoppingText(list, dateStr) {
+  const lines = ["Lista de compras · " + dateStr];
+  if (list.batches.length) lines.push("Lotes: " + list.batches.map(b => `${b.name} ${fmt(b.liters)} L`).join(", "));
+  if (list.bottled.length) {
+    lines.push("", "BOTELLAS");
+    list.bottled.forEach(r => lines.push(`- ${r.name}: ${r.buy} un. (${fmt(r.size)} ml c/u · necesitás ${fmtQty(r.unit, r.total)})`));
+  }
+  if (list.bulk.length) {
+    lines.push("", "A GRANEL");
+    list.bulk.forEach(r => lines.push(`- ${r.name}: ${fmtQty(r.unit, r.total)}`));
+  }
+  return lines.join("\n");
+}
+
+function ShoppingList({ cocktails, selection, onSelectionChange, getLiters, onLitersChange }) {
+  const [copied, setCopied] = useState(false);
+  const h = React.createElement;
+  const list = buildShoppingList(cocktails, selection, getLiters);
+  const selectedCount = cocktails.filter(c => selection[c.id]).length;
+  const allSelected = cocktails.length > 0 && selectedCount === cocktails.length;
+  const rowCount = list.bottled.length + list.bulk.length;
+  const bottleCount = list.bottled.reduce((s, r) => s + r.buy, 0);
+  const today = new Date().toLocaleDateString("es-AR");
+  const batchesLabel = list.batches.map(b => `${b.name} ${fmt(b.liters)} L`).join(" · ");
+
+  const toggle = id => onSelectionChange({ ...selection, [id]: !selection[id] });
+  const toggleAll = () => {
+    const next = {};
+    if (!allSelected) cocktails.forEach(c => { next[c.id] = true; });
+    onSelectionChange(next);
+  };
+  const copyList = async () => {
+    const text = shoppingText(list, today);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (e) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e2) {/* ignore */}
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  };
+
+  const usesLines = r => r.uses.map((u, i) => h("div", { key: i }, `${u.cocktail} · ${fmtQty(r.unit, u.total)}`));
+  const nameCell = r => h("td", { className: "bl-shop-name" }, r.name, h("div", { className: "bl-shop-uses-inline" }, usesLines(r)));
+  const tableRows = [];
+  if (list.bottled.length) {
+    tableRows.push(h("tr", { key: "g-bottled", className: "bl-shop-group" },
+      h("td", { colSpan: 4 }, "Botellas", h("span", null, list.bottled.length))));
+    list.bottled.forEach(r => tableRows.push(h("tr", { key: r.key },
+      nameCell(r),
+      h("td", { className: "bl-shop-buycell" },
+        h("span", { className: "bl-shop-buy" }, `${r.buy} un.`),
+        h("div", { className: "bl-shop-detail" }, `${fmt(r.exact)} exactas de ${fmt(r.size)} ml` + (r.leftover >= 1 ? ` · sobran ${fmt(r.leftover, 0)} ml` : "")),
+        r.mixedSizes ? h("div", { className: "bl-shop-warn" }, `Las recetas usan botellas de ${r.mixedSizes.join(" y ")} ml; se calculó con ${fmt(r.size)} ml.`) : null),
+      h("td", { className: "bl-td-computed" }, fmtQty(r.unit, r.total)),
+      h("td", { className: "bl-shop-uses" }, usesLines(r)))));
+  }
+  if (list.bulk.length) {
+    tableRows.push(h("tr", { key: "g-bulk", className: "bl-shop-group" },
+      h("td", { colSpan: 4 }, "A granel", h("span", null, list.bulk.length))));
+    list.bulk.forEach(r => tableRows.push(h("tr", { key: r.key },
+      nameCell(r),
+      h("td", { className: "bl-shop-buycell" },
+        h("span", { className: "bl-shop-buy" }, fmtQty(r.unit, r.total)),
+        h("div", { className: "bl-shop-detail" }, "sin redondear")),
+      h("td", { className: "bl-td-computed" }, fmtQty(r.unit, r.total)),
+      h("td", { className: "bl-shop-uses" }, usesLines(r)))));
+  }
+
+  return h("div", { className: "bl-panel" },
+    h("div", { className: "bl-print-header" },
+      h("p", { className: "bl-print-eyebrow" }, "Lista de compras"),
+      h("h1", null, "Compras para producción"),
+      h("p", { className: "bl-print-meta" }, (batchesLabel || "Sin cócteles elegidos") + " · " + today)),
+
+    h("div", { className: "bl-shop-head bl-no-print" },
+      h("h1", { className: "bl-shop-title" }, "Lista de compras"),
+      h("p", { className: "bl-shop-sub" }, "Tildá los cócteles que vas a producir y ajustá los litros de cada uno. La app suma los insumos que se repiten y te dice cuántas botellas comprar.")),
+
+    h("div", { className: "bl-shop-picker bl-no-print" },
+      h("div", { className: "bl-shop-picker-head" },
+        h("span", { className: "bl-field-label" }, "Cócteles a producir"),
+        cocktails.length > 0 ? h("button", { className: "bl-link-btn", onClick: toggleAll }, allSelected ? "Quitar todos" : "Seleccionar todos") : null),
+      cocktails.length === 0 ? h("p", { className: "bl-shop-empty", style: { padding: "14px" } }, "Todavía no hay cócteles cargados.") : null,
+      cocktails.map(c => {
+        const checked = !!selection[c.id];
+        return h("div", { key: c.id, className: "bl-shop-pick" + (checked ? " bl-shop-pick-on" : "") },
+          h("input", { type: "checkbox", id: "shop-" + c.id, checked, onChange: () => toggle(c.id) }),
+          h("label", { className: "bl-shop-pick-name", htmlFor: "shop-" + c.id }, c.name || "Sin nombre"),
+          h("div", { className: "bl-shop-liters" },
+            h("input", {
+              type: "number", min: "0", step: "0.5", value: getLiters(c),
+              "aria-label": "Litros de " + (c.name || "cóctel"),
+              onChange: e => {
+                onLitersChange(c.id, e.target.value);
+                if (!selection[c.id]) onSelectionChange({ ...selection, [c.id]: true });
+              }
+            }), "L"));
+      }),
+      h("p", { className: "bl-shop-picker-foot" }, "Los litros y la selección se guardan solo en este dispositivo.")),
+
+    selectedCount === 0 && cocktails.length > 0 ? h("p", { className: "bl-shop-empty" }, "Tildá al menos un cóctel para ver qué hay que comprar.") : null,
+    selectedCount > 0 && rowCount === 0 ? h("p", { className: "bl-shop-empty" }, "Los cócteles elegidos no tienen insumos con cantidad, o los litros están en 0.") : null,
+
+    rowCount > 0 ? h("div", null,
+      h("div", { className: "bl-shop-summary" },
+        h("div", { className: "bl-shop-stats" },
+          h("strong", null, rowCount), ` insumo${rowCount !== 1 ? "s" : ""} · `,
+          h("strong", null, bottleCount), ` botella${bottleCount !== 1 ? "s" : ""} a comprar`),
+        h("div", { className: "bl-shop-actions bl-no-print" },
+          h("button", { className: "bl-ghost-btn", onClick: copyList }, copied ? h(Check, { size: 14 }) : h(Copy, { size: 14 }), copied ? " ¡Copiada!" : " Copiar lista"),
+          h("button", { className: "bl-ghost-btn", onClick: () => window.print() }, h(Printer, { size: 14 }), " Imprimir / PDF"))),
+      h("div", { className: "bl-table-wrap" },
+        h("table", { className: "bl-table bl-shop-table" },
+          h("thead", null, h("tr", null,
+            h("th", { className: "bl-th-name" }, "Insumo"),
+            h("th", null, "Comprar"),
+            h("th", null, "Total necesario"),
+            h("th", null, "Usado en"))),
+          h("tbody", null, tableRows)))) : null);
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/React.createElement(App, null));
 </script>
