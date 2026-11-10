@@ -508,6 +508,10 @@
     .bl-shop-picker-head, .bl-shop-pick { padding-left: 12px; padding-right: 12px; }
   }
 
+  .bl-ghost-btn-sm { padding: 6px 10px; font-size: 12px; }
+  .bl-print-all { display: none; }
+  .bl-pr-table { min-width: 0; width: 100%; }
+
   /* responsive */
   @media (max-width: 860px) {
     .bl-body { flex-direction: column; }
@@ -579,6 +583,18 @@
     .bl-shop-warn { color: #a33 !important; }
     .bl-shop-table { min-width: 0; }
     .bl-shop-uses-inline { display: none !important; }
+  }
+  @media print {
+    body[data-print="recipes"] .bl-header,
+    body[data-print="recipes"] .bl-body,
+    body[data-print="recipes"] .bl-footer-note { display: none !important; }
+    body[data-print="recipes"] .bl-print-all { display: block; }
+    .bl-pr-page { break-after: page; page-break-after: always; }
+    .bl-pr-page:last-child { break-after: auto; page-break-after: auto; }
+    .bl-pr-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .bl-pr-table th, .bl-pr-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ddd; color: #111; }
+    .bl-pr-table thead th { background: #f4f4f4 !important; color: #333 !important; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .bl-pr-table tfoot td { font-weight: 600; border-top: 1px solid #999; }
   }
 </style>
 </head>
@@ -1507,7 +1523,10 @@ function App() {
     readOnly: !isAdmin
   }))), /*#__PURE__*/React.createElement("footer", {
     className: "bl-footer-note bl-no-print"
-  }, isAdmin ? "Modo administrador · cambios de recetas sincronizados con Firebase." : "Modo producción · receta protegida · los litros de producción son solo para este dispositivo."), loginOpen && /*#__PURE__*/React.createElement(LoginDialog, {
+  }, isAdmin ? "Modo administrador · cambios de recetas sincronizados con Firebase." : "Modo producción · receta protegida · los litros de producción son solo para este dispositivo."), /*#__PURE__*/React.createElement(PrintAllRecipes, {
+    cocktails: cocktails.filter(c => shoppingSel[c.id]),
+    getLiters: c => productionTargets[c.id] ?? c.targetLiters ?? 10
+  }), loginOpen && /*#__PURE__*/React.createElement(LoginDialog, {
     onClose: () => setLoginOpen(false),
     onLogin: handleLogin
   }));
@@ -1656,7 +1675,7 @@ function CocktailPanel({
   const sumUnit = ingredients.reduce((s, i) => s + (Number(i.amount) || 0), 0);
   const scale = sumUnit > 0 ? 1000 / sumUnit : 0;
   const target = Number(targetLiters) || 0;
-  const handlePrint = () => window.print();
+  const handlePrint = () => printPage();
   const toggleBottles = (ing, trackBottles) => {
     if (trackBottles && !ing.bottleSize) onUpdateIngredient(ing.id, {
       trackBottles,
@@ -1856,6 +1875,13 @@ function CocktailPanel({
 // ---------------------------------------------------------------------------
 // Lista de compras combinada: suma los insumos repetidos de varios cócteles
 // ---------------------------------------------------------------------------
+function printPage(mode) {
+  const clear = () => document.body.removeAttribute("data-print");
+  if (mode) document.body.setAttribute("data-print", mode); else clear();
+  window.addEventListener("afterprint", clear, { once: true });
+  window.print();
+}
+
 const ShoppingCart = p => React.createElement(Icon, p,
   React.createElement("circle", { cx: "9", cy: "21", r: "1" }),
   React.createElement("circle", { cx: "20", cy: "21", r: "1" }),
@@ -1938,6 +1964,44 @@ function shoppingText(list, dateStr) {
   return lines.join("\n");
 }
 
+function PrintAllRecipes({ cocktails, getLiters }) {
+  const h = React.createElement;
+  const today = new Date().toLocaleDateString("es-AR");
+  return h("div", { className: "bl-print-all" }, cocktails.map(c => {
+    const ings = Array.isArray(c.ingredients) ? c.ingredients : [];
+    const sum = ings.reduce((s, i) => s + (Number(i.amount) || 0), 0);
+    const scale = sum > 0 ? 1000 / sum : 0;
+    const liters = Number(getLiters(c)) || 0;
+    return h("section", { key: c.id, className: "bl-pr-page" },
+      h("div", { className: "bl-print-header" },
+        h("p", { className: "bl-print-eyebrow" }, "Especificación de producción"),
+        h("h1", null, c.name || "Sin nombre"),
+        h("p", { className: "bl-print-meta" }, `Lote: ${fmt(liters)} L · ${today}`)),
+      h("table", { className: "bl-table bl-pr-table" },
+        h("thead", null, h("tr", null, ["Insumo", "Por trago", "Presentación", "Por litro", `Total (${fmt(liters)} L)`, "Necesario"].map(t => h("th", { key: t }, t)))),
+        h("tbody", null, ings.map(ing => {
+          const amount = Number(ing.amount) || 0;
+          const perLiter = amount * scale;
+          const total = perLiter * liters;
+          const presentation = ing.trackBottles ? `Botella ${fmt(Number(ing.bottleSize) || 0, 0)} ml` : "Granel";
+          return h("tr", { key: ing.id },
+            h("td", null, ing.name),
+            h("td", { className: "bl-td-computed" }, `${fmt(amount)} ${ing.unit}`),
+            h("td", null, presentation),
+            h("td", { className: "bl-td-computed" }, `${fmt(perLiter)} ${ing.unit}`),
+            h("td", { className: "bl-td-computed" }, `${fmt(total)} ${ing.unit}`),
+            h("td", { className: "bl-td-computed bl-td-needed" }, neededDisplay(ing, total)));
+        })),
+        ings.length ? h("tfoot", null, h("tr", null,
+          h("td", null, "Total por trago"),
+          h("td", { className: "bl-td-computed" }, `${fmt(sum)} ml/gr`),
+          h("td", null, ""),
+          h("td", { className: "bl-td-computed" }, `${fmt(sum * scale)} ml`),
+          h("td", { className: "bl-td-computed" }, `${fmt(sum * scale * liters)} ml`),
+          h("td", null, ""))) : null));
+  }));
+}
+
 function ShoppingList({ cocktails, selection, onSelectionChange, getLiters, onLitersChange }) {
   const [copied, setCopied] = useState(false);
   const h = React.createElement;
@@ -2012,8 +2076,8 @@ function ShoppingList({ cocktails, selection, onSelectionChange, getLiters, onLi
 
     h("div", { className: "bl-shop-picker bl-no-print" },
       h("div", { className: "bl-shop-picker-head" },
-        h("span", { className: "bl-field-label" }, "Cócteles a producir"),
-        cocktails.length > 0 ? h("button", { className: "bl-link-btn", onClick: toggleAll }, allSelected ? "Quitar todos" : "Seleccionar todos") : null),
+        h("span", { className: "bl-field-label" }, `Cócteles a producir · ${selectedCount} de ${cocktails.length}`),
+        cocktails.length > 0 ? h("button", { className: "bl-ghost-btn bl-ghost-btn-sm", onClick: toggleAll }, h(Check, { size: 13 }), allSelected ? " Quitar todos" : " Seleccionar todos") : null),
       cocktails.length === 0 ? h("p", { className: "bl-shop-empty", style: { padding: "14px" } }, "Todavía no hay cócteles cargados.") : null,
       cocktails.map(c => {
         const checked = !!selection[c.id];
@@ -2042,7 +2106,8 @@ function ShoppingList({ cocktails, selection, onSelectionChange, getLiters, onLi
           h("strong", null, bottleCount), ` botella${bottleCount !== 1 ? "s" : ""} a comprar`),
         h("div", { className: "bl-shop-actions bl-no-print" },
           h("button", { className: "bl-ghost-btn", onClick: copyList }, copied ? h(Check, { size: 14 }) : h(Copy, { size: 14 }), copied ? " ¡Copiada!" : " Copiar lista"),
-          h("button", { className: "bl-ghost-btn", onClick: () => window.print() }, h(Printer, { size: 14 }), " Imprimir / PDF"))),
+          h("button", { className: "bl-ghost-btn", onClick: () => printPage() }, h(Printer, { size: 14 }), " Exportar lista (PDF)"),
+          h("button", { className: "bl-ghost-btn", onClick: () => printPage("recipes"), title: "Una receta por página, con los litros elegidos" }, h(Printer, { size: 14 }), ` Exportar ${selectedCount === 1 ? "receta" : "recetas"} (PDF)`))),
       h("div", { className: "bl-table-wrap" },
         h("table", { className: "bl-table bl-shop-table" },
           h("thead", null, h("tr", null,
