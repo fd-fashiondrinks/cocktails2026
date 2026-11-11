@@ -1499,7 +1499,8 @@ function App() {
     },
     onDuplicate: isAdmin ? () => { setView("recipes"); duplicateCocktail(c.id); } : null,
     onDelete: isAdmin ? () => removeCocktail(c.id) : null,
-    readOnly: !isAdmin
+    readOnly: !isAdmin,
+    liters: productionTargets[c.id] ?? c.targetLiters ?? 10
   })))), /*#__PURE__*/React.createElement("main", {
     className: "bl-main"
   }, view === "shopping" ? /*#__PURE__*/React.createElement(ShoppingList, {
@@ -1601,9 +1602,11 @@ function SidebarItem({
   onSelect,
   onDuplicate,
   onDelete,
-  readOnly
+  readOnly,
+  liters
 }) {
   const ingredients = Array.isArray(cocktail.ingredients) ? cocktail.ingredients : [];
+  const shownLiters = Number(liters ?? cocktail.targetLiters) || 0;
   const sum = ingredients.reduce((s, i) => s + (Number(i.amount) || 0), 0);
   return /*#__PURE__*/React.createElement("div", {
     className: `bl-side-item ${active ? "bl-side-item-active" : ""}`,
@@ -1634,7 +1637,7 @@ function SidebarItem({
     size: 13
   })))), /*#__PURE__*/React.createElement("div", {
     className: "bl-side-item-meta"
-  }, ingredients.length, " insumo", ingredients.length !== 1 ? "s" : "", " \xB7 ", fmt(cocktail.targetLiters), " L"), sum > 0 && /*#__PURE__*/React.createElement("div", {
+  }, ingredients.length, " insumo", ingredients.length !== 1 ? "s" : "", " \xB7 ", fmt(shownLiters), " L"), sum > 0 && /*#__PURE__*/React.createElement("div", {
     className: "bl-mini-bar"
   }, cocktail.ingredients.map((i, idx) => /*#__PURE__*/React.createElement("span", {
     key: i.id,
